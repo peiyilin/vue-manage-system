@@ -19,12 +19,13 @@
 </template>
 
 <script>
+
     export default {
         data: function(){
             return {
                 ruleForm: {
-                    username: 'admin',
-                    password: '123123'
+                    username: '',
+                    password: ''
                 },
                 rules: {
                     username: [
@@ -38,7 +39,7 @@
         },
         methods: {
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
+                /*this.$refs[formName].validate((valid) => {
                     if (valid) {
                         localStorage.setItem('ms_username',this.ruleForm.username);
                         this.$router.push('/');
@@ -46,7 +47,30 @@
                         console.log('error submit!!');
                         return false;
                     }
-                });
+                });*/
+                /*$.ajax({
+                    url:`${process.env.API_ROOT}/login`,
+                    type:'post',
+                    data:{'name':this.ruleForm.username,'password':this.ruleForm.password},
+                    dataType:'json',
+                    success:function (res) {
+                        debugger
+                        if (res.code==200){
+                            localStorage.setItem('token',res.data);
+                            this.$router.push('/');
+                        }
+                    }
+                });*/
+                this.$http.post(`${process.env.API_ROOT}/login`,{
+                    name:this.ruleForm.username,
+                    password:this.ruleForm.password
+                },{emulateJSON:true}).then(function (res) {
+                    debugger
+                    if (res.body.code=='200'){
+                        localStorage.setItem('token',res.body.data);
+                        this.$router.push('/');
+                    }
+                })
             }
         }
     }
