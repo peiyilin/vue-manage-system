@@ -25,7 +25,7 @@ Vue.http.interceptors.push(function (request,next) {
     next(response=>{
         if(response.body.msg==='token is expire'){
             localStorage.removeItem("token");
-            this.$router.push('/');
+            this.$router.push('/login');
         }
     })
 
@@ -33,6 +33,7 @@ Vue.http.interceptors.push(function (request,next) {
 //使用钩子函数
 router.beforeEach((to, from, next) => {
     // 简单的判断IE10及以下不进入富文本编辑器，该组件不兼容
+    debugger
     if(navigator.userAgent.indexOf('MSIE') > -1 && to.path === '/editor'){
         Vue.prototype.$alert('vue-quill-editor组件不兼容IE10及以下浏览器，请使用更高版本的浏览器查看', '浏览器不兼容通知', {
             confirmButtonText: '确定'

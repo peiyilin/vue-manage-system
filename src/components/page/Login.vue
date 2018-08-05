@@ -68,7 +68,7 @@
                     debugger
                     if (res.body.code=='200'){
                         localStorage.setItem('token',res.body.data);
-                        this.$router.push('/');
+                        this.$router.push('/dashboard');
                     }
                 })
             }
